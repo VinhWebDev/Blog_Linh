@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/detail.css' />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <%include ./components/header%>
+        <div class="container">
+            <div class="row">
+                <div class="intro row">
+                    <img class="col-md-6" src="/images/giangoi.jpg" alt="" srcset="">
+                    <p class="col-md-12 ">I HOPE YOU LIKE THIS BLOG!</p>
+                    <p class="bd col-1"></p>
+                </div>
+                <div class="blog-text col-8">
+                    <h1 class="blog-title">
+                        Poor :"<" </h1>
+                            <h5 class="date">
+                                08/01/2021
+                            </h5>
+                            <div class="blog-content">
+                                Do you feel sad that you are still poor, but sometimes being poor is a joy? It sounds
+                                ridiculous, right, then read the whole post and you will find out the reason behind
+                                it.<br><br>
+
+                                After a few weeks of tiring deadlines, I finally decided to go out on the street to
+                                breathe the fresh air of Hanoi morning. Because of the whole week of staying in the
+                                room, my account balance is quite large. I intend to save that money with my friends to
+                                go out this summer.<br><br>
+                                But I accidentally felt something really weird, like my "sixth sense" trying to tell
+                                something but I couldn't figure it out. As soon as I set my foot on the bus, turns out
+                                the poster advertising for the movie "Bố già" appeared right in front of my eyes. Tran
+                                Thanh, the director, and actor of the film is my favorite artist, then without
+                                hesitation, I just immediately bought a ticket at BHD Star cinema, it's also 50% off if
+                                you buy popcorn and cola combo. It's just simply a great deal. That is not to mention
+                                along the way on the bus, because I often see videos about dietary supplements reviewing
+                                by some experts on Youtube, I bought a bottle of anti-aging skin medicine from "The
+                                nature book". I only have 200,000VND left. Finally, I decided to buy a group shirt with
+                                my AI club. After all, my wallet, my credit card, my money, my everything just flew away
+                                as nothing happened.
+                                <br><br>
+                                I was so happy in the morning, but that night I couldn't sleep. My mind just all about
+                                the reason: how in the world could I use all my saved-up money that fast? I've been
+                                controlled by other people or something? I just wake up, start searching, they take me
+                                to the page to analyze the buying behavior, exactly what I need here. And I realized
+                                today I was influenced by marketing (price, product, distribution). The good sale
+                                billboards are always a great driver of my buying thinking. The impact of social groups,
+                                reference groups (expert of product consultants, celebs), you can see how it affects me.
+                                And a good marketer will capture cultural, social, personal, psychological factors and
+                                the needs of customers like me to help them make buying decisions as fast as possible
+                                and deliver company products spread to the market.
+                                <br><br>
+
+                            </div>
+
+                            <input type="hidden" name="" id="currentID" value="<%=current._id%>"">   
+                </div>
+            </div>
+            <div class=" row">
+                            <div class="col-6 justify-content-right">
+                                <%if(previous !=null) {%>
+                                    <a id="previous" href="#">
+                                        < <%=previous.title%>
+                                    </a>
+                                    <input type="hidden" name="" id="previousID" value="<%=previous._id%>"">   
+                    <%}%>
+                </div>
+                    <div class=" col-6 justify-content-left">
+                                    <%if(next!=null){ %>
+                                        <a id="next" href="#">
+                                            <%=next.title%> >
+                                        </a>
+                                        <input type="hidden" name="" id="nextID" value="<%=next._id%>"">           
+    
+                        <%}%>
+                    </div>
+                        <hr class=" col-8 justify-content-center">
+                            </div>
+
+                            <div class=" row">
+                                <div class="col-12">
+                                    <p id="comment-count">
+                                        <%=current.comment.length%> Comments
+                                    </p>
+                                </div>
+                                <div id="comment" class="col-8">
+                                </div>
+                                <div class="col-8">
+                                    <div class="row">
+                                        <input type="text" class="col-6" name="username" id="username"
+                                            placeholder="Tên của bạn">
+                                        <textarea name="comment" class="col-12" id="usercomment"></textarea>
+                                        <button class="btn btn-primary" type="button" id="btnComment">Bình luận</button>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+                <script>
+                    //GET COMMENT
+                    var comments = null;
+                    $(document).ready(() => {
+                        $.ajax({
+                            url: "getByID?id=" + currentID.value,
+                            method: "GET"
+                        }).then(
+                            (data) => {
+                                console.log(data.comment);
+                                comments = data.comment;
+                                getComment(comments)
+                            }
+                        )
+                    })
+                    console.log(comments);
+
+                    $("#previous").click(() => {
+                        window.location.href = "/user/blog?id=" + previousID.value;
+                    })
+                    $("#next").click(() => {
+                        window.location.href = "/user/blog?id=" + nextID.value;
+                    })
+                    $("#btnComment").click(createComment)
+                    function getComment(comments) {
+                        comments.map((comment, index) => {
+                            $("#comment").append(`
+                           <div class="comment-detail">
+                            <p>${comment.user}/ ${comment.date}</p>
+                            <span>${comment.comment}</span>
+                            <hr>
+                            </div>
+                        `)
+                        })
+                    }
+                    function createComment() {
+                        $.ajax({
+                            url: "/user/comment",
+                            method: "put",
+                            data: {
+                                username: username.value,
+                                comment: usercomment.value,
+                                date: (new Date().getDate()) + "/" + (new Date().getMonth()) + "/" + (new Date().getFullYear()),
+                                _id: currentID.value
+                            }
+                        }).then((data) => {
+                            console.log(data, "GIá trị trả về khi comment")
+                            window.location.href = "/user/blog?id=" + currentID.value
+                        })
+                    }
+                </script>
+                <%include ./components/footer.ejs%>
+
+</body>
+
+</html>
